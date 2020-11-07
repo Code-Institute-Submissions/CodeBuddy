@@ -1,0 +1,25 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Species</th>
+            <th>Breed</th>
+            <th>Microchip</th>
+            <th>Age</th>
+            <th></th>
+        </tr>
+        {%for each_animal in all_animals %}
+            <tr>
+                <td>{{each_animal.name}}</td> 
+                <td>{{each_animal.species}}</td>
+                <td>{{each_animal.breed}}</td>
+                <td>{{each_animal.microchip}}</td>
+                <td>{{each_animal.age}}</td>
+                <td>
+                    <a href="{{ url_for('show_edit_animal', animal_id=each_animal._id ) }}" class="btn btn-success">Edit</a>
+                    <a href="{{ url_for('show_confirm_delete', animal_id=each_animal._id)}}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {%endfor%}
+    </thead>
+</table>

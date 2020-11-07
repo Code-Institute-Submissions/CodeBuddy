@@ -1,0 +1,27 @@
+{% extends 'base.template.html' %}
+
+{%block content %}
+<form method="POST">
+    <div>
+        <label class="form-label">Animal Name</label>
+        <input type="text" class="form-control" name="animal_name"/>
+    </div>
+    <div>
+        <label class="form-label">Age</label>
+        <input type="text" class="form-control" name="age"/>
+    </div>
+    <div>
+        <label class="form-label">Species</label>
+        <input type="text" class="form-control" name="species"/>
+    </div>
+    <div>
+        <label class="form-label">Breed</label>
+        <input type="text" class="form-control" name="breed"/>
+    </div>
+    <div>
+        <label class="form-label">Microchip</label>
+        <input type="text" class="form-control" name="microchip"/>
+    </div>
+    <input type="submit" class="btn btn-primary"/>
+</form>
+{%endblock%}
