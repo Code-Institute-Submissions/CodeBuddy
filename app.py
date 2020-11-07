@@ -9,7 +9,8 @@ load_dotenv()
 # declare the global variables to store the URL to the Mongo database
 # and the name of the database that we want to use
 MONGO_URL = os.environ.get('MONGO_URL')
-DB_NAME = "tgc8_animal_shelter"
+DB_NAME = "code_buddy"
+#if this does not work then restore to animal list by instructor
 
 # create the Mongo client
 client = pymongo.MongoClient(MONGO_URL)

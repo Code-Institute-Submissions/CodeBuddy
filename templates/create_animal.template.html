@@ -1,27 +1,34 @@
 {% extends 'base.template.html' %}
 
 {%block content %}
+
+<h4>Ask a Question / Write an Article</h4>
+
 <form method="POST">
     <div>
-        <label class="form-label">Animal Name</label>
+        <label class="form-label">Title</label>
         <input type="text" class="form-control" name="animal_name"/>
     </div>
     <div>
-        <label class="form-label">Age</label>
-        <input type="text" class="form-control" name="age"/>
+        <!-- <label class="form-label">Text Body</label>
+        <input type="text" class="form-control" name="age"/> -->
+
+        <div class="form-group">Text Body
+    <textarea name="age" id="description" class="form-control" rows="10" placeholder="Enter your text here"></textarea>
     </div>
     <div>
-        <label class="form-label">Species</label>
+        <label class="form-label">Category</label>
         <input type="text" class="form-control" name="species"/>
     </div>
     <div>
-        <label class="form-label">Breed</label>
+        <label class="form-label">Author Name</label>
         <input type="text" class="form-control" name="breed"/>
     </div>
     <div>
-        <label class="form-label">Microchip</label>
+        <label class="form-label">Author Contact</label>
         <input type="text" class="form-control" name="microchip"/>
     </div>
+    </p>
     <input type="submit" class="btn btn-primary"/>
 </form>
 {%endblock%}
