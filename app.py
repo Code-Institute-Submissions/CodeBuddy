@@ -87,7 +87,7 @@ def process_create_thread():
     #     age = float(age)
     article = request.form.get('article')
 
-    if len(name) == 0:
+    if len(threadname) == 0:
         flash("Name cannot be empty", "error")
         return render_template('create_thread.template.html')
 
