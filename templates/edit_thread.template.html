@@ -1,14 +1,17 @@
 {% extends 'base.template.html' %}
 
 {%block content %}
+
+<h4>Edit Your Article</h4>
+
 <form method="POST">
     <div>
-        <label class="form-label">Thread Name</label>
+        <label class="form-label">Title</label>
         <input type="text" class="form-control" name="threadname" value="{{threads.threadname}}"/>
     </div>
     <div>
         <label class="form-label">Article</label>
-        <input type="text" class="form-control" name="article" value="{{threads.article}}"/>
+        <textarea class="form-control" name="article" rows="10">{{threads.article}}</textarea>
     </div>
     <div>
         <label class="form-label">Category</label>

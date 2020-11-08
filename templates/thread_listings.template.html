@@ -1,25 +1,22 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th>Thread Name</th>
-            <th>Category</th>
-            <th>Author Name</th>
-            <th>Author Contact</th>
-            <th>Article</th>
-            <th></th>
-        </tr>
         {%for each_thread in all_threads %}
-            <tr>
-                <td>{{each_thread.threadname}}</td> 
-                <td>{{each_thread.category}}</td>
-                <td>{{each_thread.authorname}}</td>
-                <td>{{each_thread.authorcontact}}</td>
-                <td>{{each_thread.article}}</td>
-                <td>
-                    <a href="{{ url_for('show_edit_thread', thread_id=each_thread._id ) }}" class="btn btn-success">Edit</a>
-                    <a href="{{ url_for('show_confirm_delete', thread_id=each_thread._id)}}" class="btn btn-danger">Delete</a>
-                </td>
-            </tr>
+
+      <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{each_thread.threadname}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted"><small>Posted by {{each_thread.authorname}} ({{each_thread.authorcontact}}) on datetime</small></h6>
+    
+        <div class="card-text">{{each_thread.article}}
+        <a href="#" target="_blank"><small>Read More</small></a>
+        </div>
+      </div>
+      <div class="card-footer bg-white">
+      <span class="badge badge-dark">{{each_thread.category}}</span>
+        <a class="badge badge-pill badge-secondary" href="#" target="_blank">Likes</a>
+        <a class="badge badge-pill badge-secondary" href="#" target="_blank">Comments</a>
+        <!-- edit and delete buttons -->
+        <a href="{{ url_for('show_edit_thread', thread_id=each_thread._id ) }}" class="btn btn-success">Edit</a>
+        <a href="{{ url_for('show_confirm_delete', thread_id=each_thread._id)}}" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+    </a>
         {%endfor%}
-    </thead>
-</table>

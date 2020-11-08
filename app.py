@@ -103,7 +103,7 @@ def process_create_thread():
     }
 
     db.threads.insert_one(new_record)
-    flash("New thread created successful", "success")
+    flash("New thread posted successfully!", "success")
     return redirect(url_for('show_threads'))
 
 
