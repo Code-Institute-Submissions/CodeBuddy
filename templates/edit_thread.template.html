@@ -1,0 +1,27 @@
+{% extends 'base.template.html' %}
+
+{%block content %}
+<form method="POST">
+    <div>
+        <label class="form-label">Thread Name</label>
+        <input type="text" class="form-control" name="threadname" value="{{thread.threadname}}"/>
+    </div>
+    <div>
+        <label class="form-label">Article</label>
+        <input type="text" class="form-control" name="article" value="{{thread.article}}"/>
+    </div>
+    <div>
+        <label class="form-label">Category</label>
+        <input type="text" class="form-control" name="category" value="{{thread.category}}"/>
+    </div>
+    <div>
+        <label class="form-label">Author Name</label>
+        <input type="text" class="form-control" name="authorname" value="{{thread.authorname}}"/>
+    </div>
+    <div>
+        <label class="form-label">Author Contact</label>
+        <input type="text" class="form-control" name="authorcontact" value="{{thread.authorcontact}}"/>
+    </div>
+    <input type="submit" class="btn btn-primary"/>
+</form>
+{%endblock%}

@@ -1,0 +1,25 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Thread Name</th>
+            <th>Category</th>
+            <th>Author Name</th>
+            <th>Author Contact</th>
+            <th>Article</th>
+            <th></th>
+        </tr>
+        {%for each_thread in all_threads %}
+            <tr>
+                <td>{{each_thread.threadname}}</td> 
+                <td>{{each_thread.category}}</td>
+                <td>{{each_thread.authorname}}</td>
+                <td>{{each_thread.authorcontact}}</td>
+                <td>{{each_thread.article}}</td>
+                <td>
+                    <a href="{{ url_for('show_edit_thread', thread_id=each_thread._id ) }}" class="btn btn-success">Edit</a>
+                    <a href="{{ url_for('show_confirm_delete', thread_id=each_thread._id)}}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        {%endfor%}
+    </thead>
+</table>

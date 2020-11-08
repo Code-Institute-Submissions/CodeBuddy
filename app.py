@@ -22,37 +22,37 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 
 
-@app.route('/animals')
-def show_animals():
-    all_animals = db.animals.find()
-    return render_template('all_animals.template.html',
-                           all_animals=all_animals)
+@app.route('/threads')
+def show_threads():
+    all_threads = db.threads.find()
+    return render_template('all_threads.template.html',
+                           all_threads=all_threads)
 
 
-@app.route('/animals/search')
+@app.route('/threads/search')
 def show_search_form():
     return render_template('search.template.html')
 
 
-@app.route('/animals/search', methods=['POST'])
+@app.route('/threads/search', methods=['POST'])
 def process_search_form():
-    animal_name = request.form.get('animal_name')
-    species = request.form.get('species')
+    threadname = request.form.get('threadname')
+    category = request.form.get('category')
     tags = request.form.getlist('tags')
 
     print(tags)
 
     critera = {}
 
-    if animal_name:
+    if threadname:
         critera['name'] = {
-            '$regex': animal_name,
+            '$regex': threadname,
             '$options': 'i'  # i means 'case-insensitive'
         }
 
-    if species:
-        critera['species'] = {
-            '$regex': species,
+    if category:
+        critera['category'] = {
+            '$regex': category,
             '$options': 'i'
         }
 
@@ -62,94 +62,94 @@ def process_search_form():
         }
 
     # put all the search critera into a list for easier processing
-    searched_by = [animal_name, species]
+    searched_by = [threadname, category]
 
     print(critera)
 
-    results = db.animals.find(critera)
+    results = db.threads.find(critera)
     return render_template('display_results.template.html',
-                           all_animals=results,
+                           all_threads=results,
                            searched_by=searched_by)
 
 
-@app.route('/animals/create')
-def show_create_animal():
-    return render_template('create_animal.template.html')
+@app.route('/threads/create')
+def show_create_threads():
+    return render_template('create_thread.template.html')
 
 
-@app.route('/animals/create', methods=['POST'])
-def process_create_animal():
-    name = request.form.get('animal_name')
-    species = request.form.get('species')
-    breed = request.form.get('breed')
-    age = request.form.get('age')
-    if age.isnumeric():
-        age = float(age)
-    microchip = request.form.get('microchip')
+@app.route('/threads/create', methods=['POST'])
+def process_create_thread():
+    threadname = request.form.get('threadname')
+    category = request.form.get('category')
+    authorname = request.form.get('authorname')
+    authorcontact = request.form.get('authorcontact')
+    # if age.isnumeric():
+    #     age = float(age)
+    article = request.form.get('article')
 
     if len(name) == 0:
         flash("Name cannot be empty", "error")
-        return render_template('create_animal.template.html')
+        return render_template('create_thread.template.html')
 
     new_record = {
-        'name': name,
-        'age': age,
-        'species': species,
-        'breed': breed,
-        'microchip': microchip
+        'threadname': threadname,
+        'category': category,
+        'authorname': authorname,
+        'article': article,
+        'authorcontact': authorcontact,
     }
 
-    db.animals.insert_one(new_record)
-    flash("New animal created successful", "success")
-    return redirect(url_for('show_animals'))
+    db.thread.insert_one(new_record)
+    flash("New thread created successful", "success")
+    return redirect(url_for('show_threads'))
 
 
-@app.route('/animals/edit/<animal_id>')
-def show_edit_animal(animal_id):
-    animal = db.animals.find_one({
-        '_id': ObjectId(animal_id)
+@app.route('/threads/edit/<thread_id>')
+def show_edit_thread(thread_id):
+    thread = db.threads.find_one({
+        '_id': ObjectId(thread_id)
     })
-    return render_template('edit_animal.template.html', animal=animal)
+    return render_template('edit_thread.template.html', thread=thread)
 
 
-@app.route('/animals/edit/<animal_id>', methods=["POST"])
-def process_edit_animal(animal_id):
-    name = request.form.get('animal_name')
-    species = request.form.get('species')
-    breed = request.form.get('breed')
-    age = float(request.form.get('age'))
-    microchip = request.form.get('microchip')
+@app.route('/threads/edit/<thread_id>', methods=["POST"])
+def process_edit_thread(thread_id):
+    threadname = request.form.get('threadname')
+    category = request.form.get('category')
+    authorname = request.form.get('authorname')
+    article = (request.form.get('article'))
+    authorcontact = request.form.get('authorcontact')
 
-    db.animals.update_one({
-        "_id": ObjectId(animal_id)
+    db.threads.update_one({
+        "_id": ObjectId(thread_id)
     }, {
         '$set': {
-            'name': name,
-            'species': species,
-            'breed': breed,
-            'age': age,
-            'microchip': microchip
+            'threadname': threadname,
+            'category': category,
+            'authorname': authorname,
+            'article': article,
+            'authorcontact': authorcontact,
         }
     })
-    return redirect(url_for('show_animals'))
+    return redirect(url_for('show_threads'))
 
 
-@app.route('/animals/delete/<animal_id>')
-def show_confirm_delete(animal_id):
+@app.route('/threads/delete/<thread_id>')
+def show_confirm_delete(thread_id):
     # should use find_one if I am only expecting one result
-    animal_to_be_deleted = db.animals.find_one({
-        '_id': ObjectId(animal_id)
+    thread_to_be_deleted = db.threads.find_one({
+        '_id': ObjectId(thread_id)
     })
     return render_template('show_confirm_delete.template.html',
-                           animal=animal_to_be_deleted)
+                           thread=thread_to_be_deleted)
 
 
-@app.route('/animals/delete/<animal_id>', methods=["POST"])
-def confirm_delete(animal_id):
-    db.animals.remove({
-        "_id": ObjectId(animal_id)
+@app.route('/threads/delete/<thread_id>', methods=["POST"])
+def confirm_delete(thread_id):
+    db.threads.remove({
+        "_id": ObjectId(thread_id)
     })
-    return redirect(url_for('show_animals'))
+    return redirect(url_for('show_threads'))
 
 
 # "magic code" -- boilerplate
