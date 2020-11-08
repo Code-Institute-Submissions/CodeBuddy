@@ -99,17 +99,17 @@ def process_create_thread():
         'authorcontact': authorcontact,
     }
 
-    db.thread.insert_one(new_record)
+    db.threads.insert_one(new_record)
     flash("New thread created successful", "success")
     return redirect(url_for('show_threads'))
 
 
 @app.route('/threads/edit/<thread_id>')
 def show_edit_thread(thread_id):
-    thread = db.threads.find_one({
+    threads = db.threads.find_one({
         '_id': ObjectId(thread_id)
     })
-    return render_template('edit_thread.template.html', thread=thread)
+    return render_template('edit_thread.template.html', threads=threads)
 
 
 @app.route('/threads/edit/<thread_id>', methods=["POST"])
@@ -141,7 +141,7 @@ def show_confirm_delete(thread_id):
         '_id': ObjectId(thread_id)
     })
     return render_template('show_confirm_delete.template.html',
-                           thread=thread_to_be_deleted)
+                           threads=thread_to_be_deleted)
 
 
 @app.route('/threads/delete/<thread_id>', methods=["POST"])
