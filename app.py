@@ -21,6 +21,9 @@ db = client[DB_NAME]
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 
+@app.route('/about')
+def show_about():
+    return render_template('about.template.html')
 
 @app.route('/threads')
 def show_threads():
