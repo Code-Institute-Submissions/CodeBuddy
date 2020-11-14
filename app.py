@@ -25,18 +25,18 @@ app.secret_key = os.environ.get('SECRET_KEY')
 
 @app.route('/about')
 def show_about():
-    return render_template('about.template.html')
+    return render_template('about.html')
 
 @app.route('/threads')
 def show_threads():
     all_threads = db.threads.find()
-    return render_template('all_threads.template.html',
+    return render_template('all_threads.html',
                            all_threads=all_threads)
 
 
 @app.route('/threads/search')
 def show_search_form():
-    return render_template('search.template.html')
+    return render_template('search_threads.html')
 
 
 @app.route('/threads/search', methods=['POST'])
@@ -72,14 +72,14 @@ def process_search_form():
     print(critera)
 
     results = db.threads.find(critera)
-    return render_template('display_results.template.html',
+    return render_template('display_results.html',
                            all_threads=results,
                            searched_by=searched_by)
 
 
 @app.route('/threads/create')
 def show_create_threads():
-    return render_template('create_thread.template.html')
+    return render_template('create_thread.html')
 
 
 @app.route('/threads/create', methods=['POST'])
@@ -94,7 +94,7 @@ def process_create_thread():
 
     if len(threadname) == 0:
         flash("Name cannot be empty", "error")
-        return render_template('create_thread.template.html')
+        return render_template('create_thread.html')
 
     new_record = {
         'threadname': threadname,
@@ -116,7 +116,7 @@ def show_edit_thread(thread_id):
     threads = db.threads.find_one({
         '_id': ObjectId(thread_id)
     })
-    return render_template('edit_thread.template.html', threads=threads)
+    return render_template('edit_thread.html', threads=threads)
 
 
 @app.route('/threads/edit/<thread_id>', methods=["POST"])
@@ -147,7 +147,7 @@ def show_confirm_delete(thread_id):
     thread_to_be_deleted = db.threads.find_one({
         '_id': ObjectId(thread_id)
     })
-    return render_template('show_confirm_delete.template.html',
+    return render_template('show_confirm_delete.html',
                            threads=thread_to_be_deleted)
 
 
@@ -164,7 +164,7 @@ def display_thread(thread_id):
     threads = db.threads.find_one({
         '_id': ObjectId(thread_id)
     })
-    return render_template('single_thread.template.html', threads=threads)
+    return render_template('single_thread.html', threads=threads)
 
 # "magic code" -- boilerplate
 if __name__ == '__main__':
