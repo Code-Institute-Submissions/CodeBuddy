@@ -1,0 +1,25 @@
+{% extends 'base.template.html' %}
+
+{%block content%}
+
+ <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{threads.threadname}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted"><small>Posted by {{threads.authorname}} ({{threads.authorcontact}}) on datetime</small></h6>
+    
+        <div class="card-text">{{threads.article}}
+        <a href="#" target="_blank"><small>Read More</small></a>
+        </div>
+      </div>
+      <div class="card-footer bg-white">
+      <span class="badge badge-dark">{{threads.category}}</span>
+        <a class="badge badge-pill badge-secondary" href="#" target="_blank">Likes</a>
+        <a class="badge badge-pill badge-secondary" href="#" target="_blank">Comments</a>
+        <!-- edit and delete buttons -->
+        <a href="{{ url_for('show_edit_thread', thread_id=threads._id ) }}" class="btn btn-success">Edit</a>
+        <a href="{{ url_for('show_confirm_delete', thread_id=threads._id)}}" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+    </a>
+
+    {%endblock%}

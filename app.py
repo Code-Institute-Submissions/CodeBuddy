@@ -100,6 +100,7 @@ def process_create_thread():
         'authorname': authorname,
         'article': article,
         'authorcontact': authorcontact,
+        # time_created : datetime.now (google it & how to format)
     }
 
     db.threads.insert_one(new_record)
@@ -154,6 +155,13 @@ def confirm_delete(thread_id):
     })
     return redirect(url_for('show_threads'))
 
+# show single thread
+@app.route('/threads/<thread_id>', methods=["GET"])
+def display_thread(thread_id):
+    threads = db.threads.find_one({
+        '_id': ObjectId(thread_id)
+    })
+    return render_template('single_thread.template.html', threads=threads)
 
 # "magic code" -- boilerplate
 if __name__ == '__main__':

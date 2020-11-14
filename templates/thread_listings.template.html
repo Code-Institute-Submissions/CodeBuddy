@@ -2,7 +2,9 @@
 
       <div class="card">
       <div class="card-body">
-        <h5 class="card-title">{{each_thread.threadname}}</h5>
+        <h5 class="card-title">
+        <a class="text-dark" href= "{{ url_for('display_thread', thread_id=each_thread._id ) }}">
+        {{each_thread.threadname}}</a></h5>
         <h6 class="card-subtitle mb-2 text-muted"><small>Posted by {{each_thread.authorname}} ({{each_thread.authorcontact}}) on datetime</small></h6>
     
         <div class="card-text">{{each_thread.article}}
