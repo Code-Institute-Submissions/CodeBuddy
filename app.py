@@ -3,6 +3,8 @@ import pymongo
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 import os
+import datetime
+import re
 
 load_dotenv()
 
@@ -100,6 +102,7 @@ def process_create_thread():
         'authorname': authorname,
         'article': article,
         'authorcontact': authorcontact,
+        'datetime': datetime.datetime.now(),
         # time_created : datetime.now (google it & how to format)
     }
 
