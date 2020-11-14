@@ -147,7 +147,7 @@ def show_confirm_delete(thread_id):
     thread_to_be_deleted = db.threads.find_one({
         '_id': ObjectId(thread_id)
     })
-    return render_template('show_confirm_delete.html',
+    return render_template('confirm_delete_thread.html',
                            threads=thread_to_be_deleted)
 
 
@@ -159,12 +159,32 @@ def confirm_delete(thread_id):
     return redirect(url_for('show_threads'))
 
 # show single thread
-@app.route('/threads/<thread_id>', methods=["GET"])
+@app.route('/threads/<thread_id>', methods=["GET" , "POST"])
 def display_thread(thread_id):
     threads = db.threads.find_one({
         '_id': ObjectId(thread_id)
     })
     return render_template('single_thread.html', threads=threads)
+
+#post comments
+# def process_create_comment():
+#     comment = request.form.get('comment')
+#     commenter_name = request.form.get('commenter_name')
+#     commenter_email = request.form.get('commenter_email')
+#     if len(comment) == 0:
+#         flash("Comment cannot be empty", "error")
+#         return render_template('single_thread.html')
+
+#     new_comment = {
+#         'comment': comment,
+#         'commenter_name': commenter_name,
+#         'commenter_email': commenter_email,
+#         'comment_datetime': datetime.datetime.now(),
+#     }
+
+#     db.threads.insert_one(new_comment)
+#     flash("New comment posted successfully!", "success")
+#     return redirect(url_for('display_thread'))
 
 # "magic code" -- boilerplate
 if __name__ == '__main__':
