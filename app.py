@@ -19,6 +19,8 @@ client = pymongo.MongoClient(MONGO_URL)
 # as db variable is outside of every functions, it is a global variable
 # we can use the db variable inside any functions
 db = client[DB_NAME]
+#comments db
+comments = db.comments
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
@@ -159,32 +161,35 @@ def confirm_delete(thread_id):
     return redirect(url_for('show_threads'))
 
 # show single thread
-@app.route('/threads/<thread_id>', methods=["GET" , "POST"])
+@app.route('/threads/<thread_id>', methods=["GET"])
 def display_thread(thread_id):
     threads = db.threads.find_one({
         '_id': ObjectId(thread_id)
     })
     return render_template('single_thread.html', threads=threads)
 
-#post comments
-# def process_create_comment():
-#     comment = request.form.get('comment')
-#     commenter_name = request.form.get('commenter_name')
-#     commenter_email = request.form.get('commenter_email')
-#     if len(comment) == 0:
-#         flash("Comment cannot be empty", "error")
-#         return render_template('single_thread.html')
+#route for create comment
+@app.route('/threads/comments', methods=["POST"])
+def comments_new():
+    thread_id = request.form.get('thread_id')
+    comment = request.form.get('comment')
+    commenter_name = request.form.get('commenter_name')
+    commenter_email = request.form.get('commenter_email')
+    if len(comment) == 0:
+        flash("Comment cannot be empty", "error")
+        return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
 
-#     new_comment = {
-#         'comment': comment,
-#         'commenter_name': commenter_name,
-#         'commenter_email': commenter_email,
-#         'comment_datetime': datetime.datetime.now(),
-#     }
+    new_comment = {
+        'thread_id': thread_id,
+        'comment': comment,
+        'commenter_name': commenter_name,
+        'commenter_email': commenter_email,
+        'comment_datetime': datetime.datetime.now(),
+    }
 
-#     db.threads.insert_one(new_comment)
-#     flash("New comment posted successfully!", "success")
-#     return redirect(url_for('display_thread'))
+    db.comments.insert_one(new_comment)
+    flash("New comment posted successfully!", "success")
+    return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
 
 # "magic code" -- boilerplate
 if __name__ == '__main__':
