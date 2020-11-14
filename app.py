@@ -19,8 +19,7 @@ client = pymongo.MongoClient(MONGO_URL)
 # as db variable is outside of every functions, it is a global variable
 # we can use the db variable inside any functions
 db = client[DB_NAME]
-#comments db
-comments = db.comments
+# comments = db.comments
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
@@ -130,7 +129,7 @@ def process_edit_thread(thread_id):
     authorcontact = request.form.get('authorcontact')
 
     db.threads.update_one({
-        "_id": ObjectId(thread_id)
+        '_id': ObjectId(thread_id)
     }, {
         '$set': {
             'threadname': threadname,
@@ -156,19 +155,19 @@ def show_confirm_delete(thread_id):
 @app.route('/threads/delete/<thread_id>', methods=["POST"])
 def confirm_delete(thread_id):
     db.threads.remove({
-        "_id": ObjectId(thread_id)
+        '_id': ObjectId(thread_id)
     })
     return redirect(url_for('show_threads'))
 
 # show single thread
-@app.route('/threads/<thread_id>', methods=["GET"])
+# need help to loop out comments under a thread!
+@app.route('/threads/<thread_id>')
 def display_thread(thread_id):
-    threads = db.threads.find_one({
-        '_id': ObjectId(thread_id)
-    })
-    return render_template('single_thread.html', threads=threads)
+    threads = db.threads.find_one({'_id': ObjectId(thread_id)})
+    comments = db.comments.find({'thread_id': ObjectId(thread_id)})
+    return render_template('single_thread.html', threads=threads, comments=comments)
 
-#route for create comment
+# create comment
 @app.route('/threads/comments', methods=["POST"])
 def comments_new():
     thread_id = request.form.get('thread_id')

@@ -1,0 +1,17 @@
+   {% for each_comment in comments %}
+    
+    <div class="card">
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted"><small> Posted by {{each_comment.commenter_name}} Posted on {{each_comment.comment_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
+        <div class="card-text"> {{each_comment.comment}}
+        </div>
+      </div>
+      <div class="card-footer bg-white">
+        <!-- edit and delete buttons -->
+        <a href="" class="btn btn-success">Edit</a>
+        <a href="" class="btn btn-danger">Delete</a>
+      </div>
+    </div>
+    </a>
+    
+        {% endfor %}
