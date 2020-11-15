@@ -2,30 +2,28 @@
 
 {%block content %}
 
-<h4>Ask a Question / Write an Article</h4>
+<h5 class="mt-4 mb-4">Ask a Question / Write an Article</h5>
 
 <form method="POST">
     <div>
-        <label class="form-label">Title</label>
-        <input type="text" class="form-control" name="thread_title" placeholder="Enter title here"/>
+        <label class="form-label mb-2">Title</label>
+        <input type="text" class="form-control mb-2" name="thread_title" placeholder="Enter title here"/>
     </div>
     <div>
-        <div class="form-group">Article
-    <textarea name="thread_article" class="form-control" rows="10" placeholder="Enter article / post here"></textarea>
-    </div>
+        <div class="form-group mb-2">Article</div>
+    <textarea name="thread_article" class="form-control mb-2" rows="10" placeholder="Enter article / post here"></textarea>
     <!-- <div>
         <label class="form-label">Category</label>
         <input type="text" class="form-control" name="category"/>
     </div> -->
     <div>
-        <label class="form-label">Author's Name</label>
-        <input type="text" class="form-control" name="thread_author" placeholder="Enter your name here"/>
+        <label class="form-label mb-2">Name</label>
+        <input type="text" class="form-control mb-2" name="thread_author" placeholder="Enter your name here"/>
     </div>
     <div>
-        <label class="form-label">Author's Email <small>*email will be used for identity verificaiton if you want to edit or delete your post</small></label>
-        <input type="text" class="form-control" name="thread_author_email" placeholder="Enter email here."/>
+        <label class="form-label mb-2">Email <i>(will be used as identifier to edit / delete posts)</i></label>
+        <input type="text" class="form-control mb-2" name="thread_author_email" placeholder="Enter email here"/>
     </div>
-    </p>
-    <input type="submit" class="btn btn-primary"/>
+    <div class ="text-right pt-2"><input type="submit" class="btn btn-warning"></div>
 </form>
 {%endblock%}
