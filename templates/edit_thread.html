@@ -2,29 +2,25 @@
 
 {%block content %}
 
-<h4>Edit Your Article</h4>
+<h5 class="mt-4 mb-4">Edit Your Article</h5>
 
 <form method="POST">
     <div>
-        <label class="form-label">Title</label>
-        <input type="text" class="form-control" name="thread_title" value="{{threads.thread_title}}"/>
+        <label class="form-label mb-2">Title</label>
+        <input type="text" class="form-control mb-2" name="thread_title" value="{{threads.thread_title}}"/>
     </div>
     <div>
-        <label class="form-label">Article</label>
-        <textarea class="form-control" name="thread_article" rows="10">{{threads.thread_article}}</textarea>
-    </div>
-    <!-- <div>
-        <label class="form-label">Category</label>
-        <input type="text" class="form-control" name="category" value="{{threads.category}}"/>
-    </div> -->
-    <div>
-        <label class="form-label">Author's Name</label>
-        <input type="text" class="form-control" name="thread_author" value="{{threads.thread_author}}"/>
+        <label class="form-group mb-2">Article</label>
+        <textarea class="form-control mb-2" name="thread_article" rows="12">{{threads.thread_article}}</textarea>
     </div>
     <div>
-        <label class="form-label">Author's Email <small>*email will be used for identity verificaiton if you want to edit or delete your post</small></label>
+        <label class="form-label mb-2">Name</label>
+        <input type="text" class="form-control mb-2" name="thread_author" value="{{threads.thread_author}}"/>
+    </div>
+    <div>
+        <label class="form-label mb-2">Email <i>(used as identifier to edit / delete posts)</i></label>
         <input type="text" class="form-control" name="thread_author_email" value="{{threads.thread_author_email}}"/>
     </div>
-    <input type="submit" class="btn btn-primary"/>
+    <div class ="text-right pt-2"><input type="submit" class="btn btn-warning"></div>
 </form>
 {%endblock%}

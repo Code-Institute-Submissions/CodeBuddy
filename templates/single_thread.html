@@ -19,8 +19,8 @@
                 </div>
                 <!-- edit and delete buttons -->
             <div class="col text-right">
-                <a class="badge badge-secondary p-1" href="{{ url_for('show_edit_thread', thread_id=threads._id ) }}">Edit Post</a>
-                <a class="badge badge-secondary p-1" href="{{ url_for('show_confirm_delete', thread_id=threads._id)}}">Delete Post</a>
+                <a class="badge badge-secondary p-1 mb-2" href="{{ url_for('show_edit_thread', thread_id=threads._id ) }}">Edit Post</a>
+                <a class="badge badge-dark p-1 mb-2" href="{{ url_for('show_confirm_delete', thread_id=threads._id)}}">Delete Post</a>
             </div>
         </div>
     </div>
