@@ -4,15 +4,14 @@
       <div class="card-body">
         <h5 class="card-title">
         <a class="text-dark" href= "{{ url_for('display_thread', thread_id=each_thread._id ) }}">
-        {{each_thread.threadname}}</a></h5>
-        <h6 class="card-subtitle mb-2 text-muted"><small>Posted by {{each_thread.authorname}} on {{each_thread.datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
+        {{each_thread.thread_title}}</a></h5>
+        <h6 class="card-subtitle mb-2 text-muted"><small>Posted by {{each_thread.thread_author}} on {{each_thread.thread_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
     
-        <div class="card-text">{{each_thread.article|truncate(430)}}
+        <div class="card-text">{{each_thread.thread_article|truncate(415)}}
         <a href="{{ url_for('display_thread', thread_id=each_thread._id ) }}" target="_blank"><small>Read More</small></a>
         </div>
       </div>
       <div class="card-footer bg-white">
-      <span class="badge badge-dark">{{each_thread.category}}</span>
         <a class="badge badge-pill badge-secondary" href="#" target="_blank">Likes</a>
         <a class="badge badge-pill badge-secondary" href="#" target="_blank">Comments</a>
         <!-- edit and delete buttons -->
@@ -20,7 +19,6 @@
         <a href="{{ url_for('show_confirm_delete', thread_id=each_thread._id)}}" class="btn btn-danger">Delete</a> -->
       </div>
     </div>
-    </a>
     <p>
         
         {%endfor%}

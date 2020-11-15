@@ -42,33 +42,33 @@ def show_search_form():
 
 @app.route('/threads/search', methods=['POST'])
 def process_search_form():
-    threadname = request.form.get('threadname')
-    category = request.form.get('category')
-    tags = request.form.getlist('tags')
-
-    print(tags)
+    thread_title = request.form.get('thread_title')
+    # category = request.form.get('category')
+    # tags = request.form.getlist('tags')
+    # print(tags)
 
     critera = {}
 
-    if threadname:
+    if thread_title:
         critera['name'] = {
-            '$regex': threadname,
+            '$regex': thread_title,
             '$options': 'i'  # i means 'case-insensitive'
         }
 
-    if category:
-        critera['category'] = {
-            '$regex': category,
-            '$options': 'i'
-        }
+    # if category:
+    #     critera['category'] = {
+    #         '$regex': category,
+    #         '$options': 'i'
+    #     }
 
-    if len(tags) > 0:
-        critera['tags'] = {
-            '$in': tags
-        }
+    # if len(tags) > 0:
+    #     critera['tags'] = {
+    #         '$in': tags
+    #     }
 
     # put all the search critera into a list for easier processing
-    searched_by = [threadname, category]
+    searched_by = [thread_title]
+    # [,category]
 
     print(critera)
 
@@ -85,30 +85,25 @@ def show_create_threads():
 
 @app.route('/threads/create', methods=['POST'])
 def process_create_thread():
-    threadname = request.form.get('threadname')
-    category = request.form.get('category')
-    authorname = request.form.get('authorname')
-    authorcontact = request.form.get('authorcontact')
-    # if age.isnumeric():
-    #     age = float(age)
-    article = request.form.get('article')
+    thread_title = request.form.get('thread_title')
+    thread_article = request.form.get('thread_article')
+    thread_author = request.form.get('thread_author')
+    thread_author_email = request.form.get('thread_author_email')
 
-    if len(threadname) == 0:
-        flash("Name cannot be empty", "error")
+    if len(thread_title) == 0 or len(thread_author) == 0 or len(thread_author_email) == 0 or len(thread_article) == 0:
+        flash("Please ensure all fields are filled!", "error")
         return render_template('create_thread.html')
 
     new_record = {
-        'threadname': threadname,
-        'category': category,
-        'authorname': authorname,
-        'article': article,
-        'authorcontact': authorcontact,
-        'datetime': datetime.datetime.now(),
-        # time_created : datetime.now (google it & how to format)
+        'thread_title': thread_title,
+        'thread_article': thread_article,
+        'thread_author': thread_author,
+        'thread_author_email': thread_author_email,
+        'thread_datetime': datetime.datetime.now(),
     }
 
     db.threads.insert_one(new_record)
-    flash("New thread posted successfully!", "success")
+    flash("Thread created successfully!", "success")
     return redirect(url_for('show_threads'))
 
 
@@ -122,21 +117,20 @@ def show_edit_thread(thread_id):
 
 @app.route('/threads/edit/<thread_id>', methods=["POST"])
 def process_edit_thread(thread_id):
-    threadname = request.form.get('threadname')
-    category = request.form.get('category')
-    authorname = request.form.get('authorname')
-    article = (request.form.get('article'))
-    authorcontact = request.form.get('authorcontact')
+    thread_title = request.form.get('thread_title')
+    thread_article = request.form.get('thread_article')
+    thread_author = request.form.get('thread_author')
+    thread_author_email = request.form.get('thread_author_email')
 
     db.threads.update_one({
         '_id': ObjectId(thread_id)
     }, {
-        '$set': {
-            'threadname': threadname,
-            'category': category,
-            'authorname': authorname,
-            'article': article,
-            'authorcontact': authorcontact,
+        '$set': {            
+            'thread_title': thread_title,
+            'thread_article': thread_article,
+            'thread_author': thread_author,
+            'thread_author_email': thread_author_email,
+            'thread_datetime_edited': datetime.datetime.now(),
         }
     })
     return redirect(url_for('show_threads'))
@@ -174,8 +168,8 @@ def comments_new():
     comment = request.form.get('comment')
     commenter_name = request.form.get('commenter_name')
     commenter_email = request.form.get('commenter_email')
-    if len(comment) == 0:
-        flash("Comment cannot be empty", "error")
+    if len(comment) == 0 or len(commenter_name) == 0 or len(commenter_email) == 0:
+        flash("Please ensure all comments field are filled!", "error")
         return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
 
     new_comment = {
@@ -187,7 +181,7 @@ def comments_new():
     }
 
     db.comments.insert_one(new_comment)
-    flash("New comment posted successfully!", "success")
+    flash("Comment posted successfully!", "success")
     return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
 
 # "magic code" -- boilerplate

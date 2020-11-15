@@ -7,26 +7,23 @@
 <form method="POST">
     <div>
         <label class="form-label">Title</label>
-        <input type="text" class="form-control" name="threadname" placeholder="Enter the title of your article here"/>
+        <input type="text" class="form-control" name="thread_title" placeholder="Enter title here"/>
     </div>
     <div>
-        <!-- <label class="form-label">Text Body</label>
-        <input type="text" class="form-control" name="age"/> -->
-
         <div class="form-group">Article
-    <textarea name="article" class="form-control" rows="10" placeholder="Enter your article contents here"></textarea>
+    <textarea name="thread_article" class="form-control" rows="10" placeholder="Enter article / post here"></textarea>
     </div>
-    <div>
+    <!-- <div>
         <label class="form-label">Category</label>
         <input type="text" class="form-control" name="category"/>
+    </div> -->
+    <div>
+        <label class="form-label">Author's Name</label>
+        <input type="text" class="form-control" name="thread_author" placeholder="Enter your name here"/>
     </div>
     <div>
-        <label class="form-label">Author Name</label>
-        <input type="text" class="form-control" name="authorname"/>
-    </div>
-    <div>
-        <label class="form-label">Email</label>
-        <input type="text" class="form-control" name="authorcontact"/>
+        <label class="form-label">Author's Email <small>*email will be used for identity verificaiton if you want to edit or delete your post</small></label>
+        <input type="text" class="form-control" name="thread_author_email" placeholder="Enter email here."/>
     </div>
     </p>
     <input type="submit" class="btn btn-primary"/>

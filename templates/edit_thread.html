@@ -7,23 +7,23 @@
 <form method="POST">
     <div>
         <label class="form-label">Title</label>
-        <input type="text" class="form-control" name="threadname" value="{{threads.threadname}}"/>
+        <input type="text" class="form-control" name="thread_title" value="{{threads.thread_title}}"/>
     </div>
     <div>
         <label class="form-label">Article</label>
-        <textarea class="form-control" name="article" rows="10">{{threads.article}}</textarea>
+        <textarea class="form-control" name="thread_article" rows="10">{{threads.thread_article}}</textarea>
     </div>
-    <div>
+    <!-- <div>
         <label class="form-label">Category</label>
         <input type="text" class="form-control" name="category" value="{{threads.category}}"/>
+    </div> -->
+    <div>
+        <label class="form-label">Author's Name</label>
+        <input type="text" class="form-control" name="thread_author" value="{{threads.thread_author}}"/>
     </div>
     <div>
-        <label class="form-label">Author Name</label>
-        <input type="text" class="form-control" name="authorname" value="{{threads.authorname}}"/>
-    </div>
-    <div>
-        <label class="form-label">Author Contact</label>
-        <input type="text" class="form-control" name="authorcontact" value="{{threads.authorcontact}}"/>
+        <label class="form-label">Author's Email <small>*email will be used for identity verificaiton if you want to edit or delete your post</small></label>
+        <input type="text" class="form-control" name="thread_author_email" value="{{threads.thread_author_email}}"/>
     </div>
     <input type="submit" class="btn btn-primary"/>
 </form>
