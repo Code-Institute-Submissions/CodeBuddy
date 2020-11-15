@@ -1,0 +1,10 @@
+body {
+  background-color: #FEFEFE;
+}
+
+#footer {
+  font-size: 80%;
+  margin-bottom: 16px;
+  width: 100%;
+  text-align: right;
+}

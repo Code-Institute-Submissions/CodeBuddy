@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Own CSS -->
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
     <title>Code Buddy</title>
   </head>
   <body>
@@ -53,6 +53,12 @@
 
     <!-- threads displayed as cards -->
     {% block content %}{% endblock %}
+    
+    <!-- footer --> 
+    <hr class="shadow-sm pt-2 mt-5">
+     <div id="footer">
+        &copy; Cody Buddy by Jiun Yang // 2020
+    <!-- end of container -->
     </div>
 
     <!-- Optional JavaScript -->
