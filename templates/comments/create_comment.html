@@ -1,19 +1,30 @@
-<h4>Post Comments</h4>
-<form action='/threads/comments' form method="POST">
 
-<input type='hidden' value='{{threads._id}}' name='thread_id'/>
-    
-    <div>
-        <label class="form-group">Comment</label>
-        <textarea type="text" rows="5" class="form-control" name="comment" placeholder="Enter the comment here"></textarea>
+<form action='/threads/comments' form method="POST">
+<!-- to map each comments to the thread_id -->
+    <input type='hidden' value='{{threads._id}}' name='thread_id'/>
+        <div class="card">
+            <div class="card-body pb-2">
+                <h5 class="card-title">Post Comments</h5>
+                <h6 class="card-subtitle">
+                <textarea type="text" rows="5" class="form-control" name="comment" placeholder="Enter your comments here"></textarea>
+                </h6>
+                <div class="card-text">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col pt-2 pb-2 pl-0 pr-2">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" name="commenter_name" placeholder="Enter your name here"/>
+                            </div>
+                        <div class="col pt-2 pb-2 pl-2 pr-0">
+                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" name="commenter_email" placeholder="Used for edit/delete comments"/>
+                        </div>
+                    </div>
+                </div>    
+                <div class="card-footer bg-white border-0 text-right p-0">
+                    <input type="submit" class="btn btn-primary"/>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label class="form-label">Commenter's Name</label>
-        <input type="text" class="form-control" name="commenter_name"/>
-    </div>
-    <div>
-        <label class="form-label">Commenter's Email</label>
-        <input type="text" class="form-control" name="commenter_email"/>
-    </div>
-    <input type="submit" class="btn btn-primary"/>
 </form>

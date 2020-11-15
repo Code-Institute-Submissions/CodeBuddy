@@ -1,8 +1,10 @@
-   {% for each_comment in comments %}
+Comments Section
+
+{% for each_comment in comments %}
     
     <div class="card">
       <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-muted"><small> Posted by {{each_comment.commenter_name}} Posted on {{each_comment.comment_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
+        <h6 class="card-subtitle mb-2 text-muted"><small>by {{each_comment.commenter_name}} on {{each_comment.comment_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
         <div class="card-text"> {{each_comment.comment}}
         </div>
       </div>
@@ -13,4 +15,4 @@
       </div>
     </div>
     
-        {% endfor %}
+{% endfor %}
