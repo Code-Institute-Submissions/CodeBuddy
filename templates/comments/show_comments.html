@@ -1,18 +1,19 @@
-Comments Section
+<h5 class="pt-3 pb-1 pl-3">Comments</h5>
 
 {% for each_comment in comments %}
-    
+
     <div class="card">
-      <div class="card-body">
-        <h6 class="card-subtitle mb-2 text-muted"><small>by {{each_comment.commenter_name}} on {{each_comment.comment_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
+      <div class="card-body pb-1">
+        <h6 class="card-subtitle mb-2 text-muted"><small>by <b>{{each_comment.commenter_name}}</b> on {{each_comment.comment_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
         <div class="card-text"> {{each_comment.comment}}
         </div>
       </div>
-      <div class="card-footer bg-white">
-        edit and delete buttons
-        <a href="" class="btn btn-success">Edit</a>
-        <a href="" class="btn btn-danger">Delete</a>
+      <div class="card-footer bg-white border-0 text-right pt-0 pb-2">
+                <a class="badge badge-secondary p-1" href="{{ url_for('show_edit_thread', thread_id=threads._id ) }}">Edit Comment</a>
+                <a class="badge badge-secondary p-1" href="{{ url_for('show_confirm_delete', thread_id=threads._id)}}">Delete Comment</a>
       </div>
     </div>
     
 {% endfor %}
+
+
