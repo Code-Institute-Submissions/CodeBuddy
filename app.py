@@ -158,7 +158,9 @@ def confirm_delete(thread_id):
 @app.route('/threads/<thread_id>')
 def display_thread(thread_id):
     threads = db.threads.find_one({'_id': ObjectId(thread_id)})
-    comments = db.comments.find({'thread_id': ObjectId(thread_id)})
+    comments = db.comments.find({'thread_id': thread_id})
+    # comments_list = list(comments)
+    # print(comments_list)
     return render_template('single_thread.html', threads=threads, comments=comments)
 
 # create comment
