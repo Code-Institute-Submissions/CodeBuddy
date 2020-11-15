@@ -157,6 +157,7 @@ def process_edit_thread(thread_id):
     comments = db.comments.find({'thread_id': thread_id})
     return render_template('single_thread.html', threads=threads, comments=comments)
 
+
 @app.route('/threads/delete/<thread_id>')
 def show_confirm_delete(thread_id):
     # should use find_one if I am only expecting one result
@@ -169,9 +170,23 @@ def show_confirm_delete(thread_id):
 
 @app.route('/threads/delete/<thread_id>', methods=["POST"])
 def confirm_delete(thread_id):
+    thread_to_be_deleted = db.threads.find_one({
+        '_id': ObjectId(thread_id)
+    })
+    thread_author_email = request.form.get('thread_author_email')
+    auth_email = thread_author_email.lower()
+    auth_email = auth_email.strip()
+    # grab email from mongodb
+    original_email = thread_to_be_deleted["thread_author_email"]
+    # if email from mongodb dont match email from user input
+    if original_email != auth_email:
+        flash("Your email does not match the original record for this post. Delete was unsuccessful.", "error")
+        return render_template('confirm_delete_thread.html', threads=thread_to_be_deleted)
+    
     db.threads.remove({
         '_id': ObjectId(thread_id)
     })
+    flash("Article deleted successfully!", "success")
     return redirect(url_for('show_threads'))
 
 # show single thread

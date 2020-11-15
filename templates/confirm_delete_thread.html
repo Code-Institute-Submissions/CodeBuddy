@@ -1,13 +1,20 @@
 {% extends 'base.template.html' %}
 
 {%block content%}
+
+<h5 class="mt-4 mb-4">Delete Your Article</h5>
+
 <div>
 	<form method="POST">
 		<div class="alert alert-danger">
-			<p>Are you sure you want to delete this thread - {{threads.thread_title}}?</p>
-            <div>
+        <div>
+            <label class="form-label mb-3 mt-2 ml-1">Email <i>(required to delete article)</i></label>
+            <input type="text" class="form-control mb-2" name="thread_author_email" placeholder="Please enter the email used to create this article"/>
+        </div>
+			<div class="pt-4 ml-1">Are you sure you want to delete - <b>"{{threads.thread_title}}"</b></div>
+            <div class ="text-right pb-2">
+                <a href="{{url_for('show_threads') }}/{{threads._id}}" class="btn btn-success">Cancel Delete</a>
                 <input type="submit" value="Confirm" class="btn btn-danger"/>
-                <a href="{{url_for('show_threads') }}" class="btn btn-success">Cancel Delete</a>
             </div>
 		</div>
 	</form>
