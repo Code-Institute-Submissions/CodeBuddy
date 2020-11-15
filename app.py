@@ -222,12 +222,45 @@ def comments_new():
     flash("Comment posted successfully!", "success")
     return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
 
-# edit comment
+# show edit comment
 @app.route('/comments/edit/<comment_id>')
 def show_edit_comment(comment_id):
     comments = db.comments.find_one({'_id': ObjectId(comment_id)})
-    print(comments)
     return render_template('comments/edit_comment.html', comments=comments)
+
+# confirm edit comment
+@app.route('/comments/edit/<comment_id>', methods=["POST"])
+def process_edit_comment(thread_id, comment_id):    
+    comments = db.comments.find_one({
+        '_id': ObjectId(comment_id)
+    })
+    comment = request.form.get('comment')
+    commenter_email = request.form.get('commenter_email')
+    auth_email = commenter_email.lower()
+    auth_email = auth_email.strip()
+    # grab email from mongodb
+    original_email = comments["commenter_email"]
+    # if email from mongodb dont match email from user input
+    if original_email != auth_email:
+        flash("Your email does not match the original record for this comment. Edit was unsuccessful, changes were not saved.", "error")
+        return render_template('comments/edit_comment.html', comments=comments)
+
+    # ensure edited fields have content
+    elif len(comment) == 0:
+        flash("Please ensure all field are filled! Your changes were not saved.", "error")
+        return render_template('comments/edit_comment.html', comments=comments)
+
+    db.comments.update_one({
+        '_id': ObjectId(comment_id)
+    }, {
+        '$set': {            
+            'comment': comment,
+            'comment_datetime_edited': datetime.datetime.now(),
+        }
+    })
+    flash("Comment updated successfully!", "success")
+    threads = db.threads.find_one({'_id': ObjectId(thread_id)})
+    return render_template('single_thread.html', threads=threads)
 
 # "magic code" -- boilerplate
 if __name__ == '__main__':
