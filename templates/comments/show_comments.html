@@ -9,12 +9,11 @@
         </div>
       </div>
       <div class="card-footer bg-white border-0 text-right pt-0 pb-2 mb-2">
-                <a class="badge badge-secondary p-1" href="{{ url_for('show_edit_thread', thread_id=threads._id ) }}">Edit Comment</a>
-                <a class="badge badge-dark p-1" href="{{ url_for('show_confirm_delete', thread_id=threads._id)}}">Delete Comment</a>
+                <a class="badge badge-secondary p-1" href="{{url_for('show_edit_comment', comment_id=each_comment._id)}}">Edit Comment</a>
+                <a class="badge badge-dark p-1" href="#">Delete Comment</a>
       </div>
     </div>
     <p>
     
 {% endfor %}
-
 

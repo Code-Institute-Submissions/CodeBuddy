@@ -107,7 +107,7 @@ def process_create_thread():
     }
 
     db.threads.insert_one(new_record)
-    flash("Thread created successfully!", "success")
+    flash("Article created successfully!", "success")
     return redirect(url_for('show_threads'))
 
 
@@ -221,6 +221,13 @@ def comments_new():
     db.comments.insert_one(new_comment)
     flash("Comment posted successfully!", "success")
     return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
+
+# edit comment
+@app.route('/comments/edit/<comment_id>')
+def show_edit_comment(comment_id):
+    comments = db.comments.find_one({'_id': ObjectId(comment_id)})
+    print(comments)
+    return render_template('comments/edit_comment.html', comments=comments)
 
 # "magic code" -- boilerplate
 if __name__ == '__main__':
