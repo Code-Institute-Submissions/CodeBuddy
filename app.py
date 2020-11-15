@@ -89,6 +89,10 @@ def process_create_thread():
     thread_article = request.form.get('thread_article')
     thread_author = request.form.get('thread_author')
     thread_author_email = request.form.get('thread_author_email')
+    # convert email to lowercase
+    # remove first and last space of email input
+    thread_author_email = thread_author_email.lower()
+    thread_author_email = thread_author_email.strip()
 
     if len(thread_title) == 0 or len(thread_author) == 0 or len(thread_author_email) == 0 or len(thread_article) == 0:
         flash("Please ensure all fields are filled!", "error")
@@ -114,13 +118,28 @@ def show_edit_thread(thread_id):
     })
     return render_template('edit_thread.html', threads=threads)
 
-
 @app.route('/threads/edit/<thread_id>', methods=["POST"])
 def process_edit_thread(thread_id):
+    threads = db.threads.find_one({
+        '_id': ObjectId(thread_id)
+    })
     thread_title = request.form.get('thread_title')
     thread_article = request.form.get('thread_article')
     thread_author = request.form.get('thread_author')
     thread_author_email = request.form.get('thread_author_email')
+    auth_email = thread_author_email.lower()
+    auth_email = auth_email.strip()
+    # grab email from mongodb
+    original_email = threads["thread_author_email"]
+    # if email from mongodb dont match email from user input
+    if original_email != auth_email:
+        flash("Your email does not match the original record for this post. Edit was unsuccessful, changes were not saved.", "error")
+        return render_template('edit_thread.html', threads=threads)
+
+    # ensure edited fields have content
+    elif len(thread_title) == 0 or len(thread_article) == 0:
+        flash("Please ensure all field are filled! Your changes were not saved.", "error")
+        return render_template('edit_thread.html', threads=threads)
 
     db.threads.update_one({
         '_id': ObjectId(thread_id)
@@ -128,13 +147,15 @@ def process_edit_thread(thread_id):
         '$set': {            
             'thread_title': thread_title,
             'thread_article': thread_article,
-            'thread_author': thread_author,
-            'thread_author_email': thread_author_email,
+            # 'thread_author': thread_author,
+            # 'thread_author_email': thread_author_email,
             'thread_datetime_edited': datetime.datetime.now(),
         }
     })
-    return redirect(url_for('show_threads'))
-
+    flash("Article updated successfully!", "success")
+    threads = db.threads.find_one({'_id': ObjectId(thread_id)})
+    comments = db.comments.find({'thread_id': thread_id})
+    return render_template('single_thread.html', threads=threads, comments=comments)
 
 @app.route('/threads/delete/<thread_id>')
 def show_confirm_delete(thread_id):
@@ -154,13 +175,10 @@ def confirm_delete(thread_id):
     return redirect(url_for('show_threads'))
 
 # show single thread
-# need help to loop out comments under a thread!
 @app.route('/threads/<thread_id>')
 def display_thread(thread_id):
     threads = db.threads.find_one({'_id': ObjectId(thread_id)})
     comments = db.comments.find({'thread_id': thread_id})
-    # comments_list = list(comments)
-    # print(comments_list)
     return render_template('single_thread.html', threads=threads, comments=comments)
 
 # create comment
@@ -173,7 +191,10 @@ def comments_new():
     if len(comment) == 0 or len(commenter_name) == 0 or len(commenter_email) == 0:
         flash("Please ensure all comments field are filled!", "error")
         return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
-
+    # convert email input to lowercase
+    # remove first and last spaces of input
+    commenter_email = commenter_email.lower()
+    commenter_email = commenter_email.strip()
     new_comment = {
         'thread_id': thread_id,
         'comment': comment,

@@ -6,6 +6,10 @@
 
 <form method="POST">
     <div>
+        <label class="form-label mb-2">Email <i>(used as identifier to edit / delete posts)</i></label>
+        <input type="text" class="form-control mb-2" name="thread_author_email" placeholder="Please enter the email used to create this post"/>
+    </div>
+    <div>
         <label class="form-label mb-2">Title</label>
         <input type="text" class="form-control mb-2" name="thread_title" value="{{threads.thread_title}}"/>
     </div>
@@ -13,14 +17,13 @@
         <label class="form-group mb-2">Article</label>
         <textarea class="form-control mb-2" name="thread_article" rows="12">{{threads.thread_article}}</textarea>
     </div>
-    <div>
+    <!-- <div>
         <label class="form-label mb-2">Name</label>
         <input type="text" class="form-control mb-2" name="thread_author" value="{{threads.thread_author}}"/>
+    </div> -->
+    <div class ="text-right pt-2">
+    <a href="{{url_for('show_threads') }}/{{threads._id}}" class="btn btn-outline-dark mr-2">Back to Article</a>
+    <input type="submit" class="btn btn-warning">
     </div>
-    <div>
-        <label class="form-label mb-2">Email <i>(used as identifier to edit / delete posts)</i></label>
-        <input type="text" class="form-control" name="thread_author_email" value="{{threads.thread_author_email}}"/>
-    </div>
-    <div class ="text-right pt-2"><input type="submit" class="btn btn-warning"></div>
 </form>
 {%endblock%}
