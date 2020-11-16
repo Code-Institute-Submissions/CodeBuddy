@@ -12,7 +12,7 @@ load_dotenv()
 # and the name of the database that we want to use
 MONGO_URL = os.environ.get('MONGO_URL')
 DB_NAME = "code_buddy"
-#if this does not work then restore to animal list by instructor
+# if this does not work then restore to animal list by instructor
 
 # create the Mongo client
 client = pymongo.MongoClient(MONGO_URL)
@@ -24,9 +24,11 @@ db = client[DB_NAME]
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 
+
 @app.route('/about')
 def show_about():
     return render_template('about.html')
+
 
 @app.route('/threads')
 def show_threads():
@@ -43,9 +45,9 @@ def show_search_form():
 @app.route('/threads/search', methods=['POST'])
 def process_search_form():
     thread_title = request.form.get('thread_title')
-    # category = request.form.get('category')
-    # tags = request.form.getlist('tags')
-    # print(tags)
+    category = request.form.get('category')
+    tags = request.form.getlist('tags')
+    print(tags)
 
     critera = {}
 
@@ -55,20 +57,19 @@ def process_search_form():
             '$options': 'i'  # i means 'case-insensitive'
         }
 
-    # if category:
-    #     critera['category'] = {
-    #         '$regex': category,
-    #         '$options': 'i'
-    #     }
+    if category:
+        critera['category'] = {
+            '$regex': category,
+            '$options': 'i'
+        }
 
-    # if len(tags) > 0:
-    #     critera['tags'] = {
-    #         '$in': tags
-    #     }
+    if len(tags) > 0:
+        critera['tags'] = {
+            '$in': tags
+        }
 
     # put all the search critera into a list for easier processing
     searched_by = [thread_title]
-    # [,category]
 
     print(critera)
 
@@ -118,6 +119,7 @@ def show_edit_thread(thread_id):
     })
     return render_template('edit_thread.html', threads=threads)
 
+
 @app.route('/threads/edit/<thread_id>', methods=["POST"])
 def process_edit_thread(thread_id):
     threads = db.threads.find_one({
@@ -144,7 +146,7 @@ def process_edit_thread(thread_id):
     db.threads.update_one({
         '_id': ObjectId(thread_id)
     }, {
-        '$set': {            
+        '$set': {
             'thread_title': thread_title,
             'thread_article': thread_article,
             # 'thread_author': thread_author,
@@ -182,7 +184,7 @@ def confirm_delete(thread_id):
     if original_email != auth_email:
         flash("Your email does not match the original record for this post. Delete was unsuccessful.", "error")
         return render_template('confirm_delete_thread.html', threads=thread_to_be_deleted)
-    
+
     db.threads.remove({
         '_id': ObjectId(thread_id)
     })
@@ -190,6 +192,8 @@ def confirm_delete(thread_id):
     return redirect(url_for('show_threads'))
 
 # show single thread
+
+
 @app.route('/threads/<thread_id>')
 def display_thread(thread_id):
     threads = db.threads.find_one({'_id': ObjectId(thread_id)})
@@ -197,6 +201,8 @@ def display_thread(thread_id):
     return render_template('single_thread.html', threads=threads, comments=comments)
 
 # create comment
+
+
 @app.route('/threads/comments', methods=["POST"])
 def comments_new():
     thread_id = request.form.get('thread_id')
@@ -223,15 +229,20 @@ def comments_new():
     return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
 
 # show edit comment
+
+
 @app.route('/threads/edit/<thread_id>/<comment_id>')
 def show_edit_comment(thread_id, comment_id):
     threads = db.threads.find_one({'_id': ObjectId(thread_id)})
-    comments = db.comments.find_one({'_id': ObjectId(comment_id),'thread_id' : thread_id})
+    comments = db.comments.find_one(
+        {'_id': ObjectId(comment_id), 'thread_id': thread_id})
     return render_template('comments/edit_comment.html', threads=threads, comments=comments)
 
 # confirm edit comment
+
+
 @app.route('/threads/edit/<thread_id>/<comment_id>', methods=["POST"])
-def process_edit_comment(thread_id, comment_id):    
+def process_edit_comment(thread_id, comment_id):
     threads = db.threads.find_one({'_id': ObjectId(thread_id)})
     comments = db.comments.find_one({
         '_id': ObjectId(comment_id)
@@ -255,7 +266,7 @@ def process_edit_comment(thread_id, comment_id):
     db.comments.update_one({
         '_id': ObjectId(comment_id)
     }, {
-        '$set': {            
+        '$set': {
             'comment': comment,
             'comment_datetime_edited': datetime.datetime.now(),
         }
@@ -270,7 +281,8 @@ def process_edit_comment(thread_id, comment_id):
 @app.route('/threads/delete/<thread_id>/<comment_id>')
 def show_delete_comment(thread_id, comment_id):
     threads = db.threads.find_one({'_id': ObjectId(thread_id)})
-    comments = db.comments.find_one({'_id': ObjectId(comment_id),'thread_id' : thread_id})
+    comments = db.comments.find_one(
+        {'_id': ObjectId(comment_id), 'thread_id': thread_id})
     return render_template('comments/delete_comment.html', threads=threads, comments=comments)
 
 
@@ -290,7 +302,7 @@ def confirm_delete_comment(thread_id, comment_id):
     if original_email != auth_email:
         flash("Your email does not match the original record for this comment. Delete was unsuccessful.", "error")
         return render_template('comments/delete_comment.html', threads=threads, comments=comments)
-    
+
     db.comments.remove({
         '_id': ObjectId(comment_id)
     })

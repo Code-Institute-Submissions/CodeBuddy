@@ -1,24 +1,24 @@
         {%for each_thread in all_threads %}
 
-      <div class="card">
+      <div class="card border-secondary">
       <div class="card-body">
-        <h5 class="card-title">
+        <h5 class="card-title pb-1">
         <a class="text-dark" href= "{{ url_for('display_thread', thread_id=each_thread._id ) }}">
         {{each_thread.thread_title}}</a></h5>
-        <h6 class="card-subtitle mb-2 text-muted"><small>Posted by {{each_thread.thread_author}} on {{each_thread.thread_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
+        <h6 class="card-subtitle mb-3 text-muted"><small>Posted by <b>{{each_thread.thread_author}}</b> on {{each_thread.thread_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
     
-        <div class="card-text">{{each_thread.thread_article|truncate(415)}}
+        <div class="card-text">{{each_thread.thread_article|truncate(550)}}
         <a href="{{ url_for('display_thread', thread_id=each_thread._id ) }}" target="_blank"><small>Read More</small></a>
         </div>
       </div>
       <div class="card-footer bg-white">
-        <a class="badge badge-pill badge-secondary" href="#" target="_blank">Likes</a>
-        <a class="badge badge-pill badge-secondary" href="#" target="_blank">Comments</a>
+        <!-- <a class="badge badge-pill badge-secondary" href="#" target="_blank">Likes</a>
+        <a class="badge badge-pill badge-secondary" href="#" target="_blank">Comments</a> -->
         <!-- edit and delete buttons -->
         <!-- <a href="{{ url_for('show_edit_thread', thread_id=each_thread._id ) }}" class="btn btn-success">Edit</a>
         <a href="{{ url_for('show_confirm_delete', thread_id=each_thread._id)}}" class="btn btn-danger">Delete</a> -->
       </div>
     </div>
-    <p>
+    <div class='mb-4'></div>
         
         {%endfor%}
