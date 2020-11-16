@@ -41,36 +41,36 @@ def homepage_redirect():
     return redirect(url_for('show_threads'))
 
 
-@app.route('/threads/search')
+@app.route('/search')
 def show_search_form():
     return render_template('search_threads.html')
 
 
-@app.route('/threads/search', methods=['POST'])
+@app.route('/search', methods=['POST'])
 def process_search_form():
     thread_title = request.form.get('thread_title')
-    category = request.form.get('category')
-    tags = request.form.getlist('tags')
-    print(tags)
+    # category = request.form.get('category')
+    # tags = request.form.getlist('tags')
+    # print(tags)
 
     critera = {}
 
     if thread_title:
-        critera['name'] = {
+        critera['thread_title'] = {
             '$regex': thread_title,
             '$options': 'i'  # i means 'case-insensitive'
         }
 
-    if category:
-        critera['category'] = {
-            '$regex': category,
-            '$options': 'i'
-        }
+    # if category:
+    #     critera['category'] = {
+    #         '$regex': category,
+    #         '$options': 'i'
+    #     }
 
-    if len(tags) > 0:
-        critera['tags'] = {
-            '$in': tags
-        }
+    # if len(tags) > 0:
+    #     critera['tags'] = {
+    #         '$in': tags
+    #     }
 
     # put all the search critera into a list for easier processing
     searched_by = [thread_title]

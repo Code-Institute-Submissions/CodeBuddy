@@ -1,11 +1,10 @@
-{%extends 'base.template.html' %}
+{% extends 'base.template.html' %}
 
-{%block content%}
+{% block content %}
 
-<h1>Display Search Results</h1>
-<p>Searching by {{",".join(searched_by)}}
+<h5>Display Search Results</h5>
+<p>Results for article title(s) with keyword "<b>{{",".join(searched_by)}}</b>" :
 
-{%include 'thread_cards.html' %}
+{% include 'thread_cards.html' %}
 
-
-{%endblock%}
+{% endblock %}

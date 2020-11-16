@@ -15,19 +15,25 @@
   <body>
 
 <!-- navbar -->
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4 pt-2 pb-2">
 <div class="container">
   <a class="navbar-brand" href="{{ url_for('show_threads')}}">Code Buddy</a>
-    <ul class="navbar-nav mr-auto mt-0">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="{{ url_for('show_about')}}">About <span class="sr-only"></span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('show_search_form')}}">Search <span class="sr-only"></span></a>
+      </li>
     </ul>
-      <a class="btn btn-outline-warning my-0" href="{{ url_for('show_create_threads') }}">Post Qn / Article</a>
+      <a class="btn btn-outline-warning my-0" href="{{ url_for('show_create_threads') }}">Post an Article / Question</a>
 </div>
 </nav>
-  
-
    <div class ="container">
    
    <!-- flash messages -->

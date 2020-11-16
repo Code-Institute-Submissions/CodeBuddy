@@ -1,25 +1,15 @@
 {% extends 'base.template.html' %}
 
 {% block content %}
+
+<h4>Search</h4>
 <form method="POST">
 	<div class="row">
 		<div class="col">
-			<label>Thread Title</label>
-			<input type="text" class="form-control" name="thread_title"/>
-        </div>
-        <div class="col">
-            <label>Type</label>
-            <input type="text" class="form-control" name="species"/>
-        </div>
-        <div class="col">
-            <label>Categories</label>
-            <div>
-                <input type="checkbox" name="tags" value="cat-friendly" class="mr-2"/>Cat Friendly
-                <input type="checkbox" name="tags" value="adorable" class="mr-2"/>Adorable
-                <input type="checkbox" name="tags" value="housebroken" class="mr-2"/>House Broken
-            </div>
+			<label>Search Titles</label>
+			<input type="text" class="form-control" name="thread_title" placeholder="Enter keyword here"/>
         </div>
     </div>
-    <input type="submit" value="Search" class="btn btn-primary mt-3"/>
+    <div class="text-right"><input type="submit" value="Search" class="btn btn-warning mt-3"/></div>
 </form>
 {% endblock %}
