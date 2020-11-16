@@ -24,7 +24,6 @@ db = client[DB_NAME]
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY')
 
-
 @app.route('/about')
 def show_about():
     return render_template('about.html')
@@ -35,6 +34,11 @@ def show_threads():
     all_threads = db.threads.find()
     return render_template('all_threads.html',
                            all_threads=all_threads)
+
+
+@app.route('/')
+def homepage_redirect():
+    return redirect(url_for('show_threads'))
 
 
 @app.route('/threads/search')
