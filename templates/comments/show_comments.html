@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="card-footer bg-white border-0 text-right pt-0 pb-2 mb-2">
-                <a class="badge badge-secondary p-1" href="{{url_for('show_edit_comment', comment_id=each_comment._id)}}">Edit Comment</a>
+                <a class="badge badge-secondary p-1" href="{{url_for('show_edit_comment', comment_id=each_comment._id, thread_id=each_comment.thread_id)}}">Edit Comment</a>
                 <a class="badge badge-dark p-1" href="#">Delete Comment</a>
       </div>
     </div>

@@ -223,14 +223,16 @@ def comments_new():
     return redirect(url_for('display_thread', thread_id=request.form.get('thread_id')))
 
 # show edit comment
-@app.route('/comments/edit/<comment_id>')
-def show_edit_comment(comment_id):
-    comments = db.comments.find_one({'_id': ObjectId(comment_id)})
-    return render_template('comments/edit_comment.html', comments=comments)
+@app.route('/threads/edit/<thread_id>/<comment_id>')
+def show_edit_comment(thread_id, comment_id):
+    threads = db.threads.find_one({'_id': ObjectId(thread_id)})
+    comments = db.comments.find_one({'_id': ObjectId(comment_id),'thread_id' : thread_id})
+    return render_template('comments/edit_comment.html', threads=threads, comments=comments)
 
 # confirm edit comment
-@app.route('/comments/edit/<comment_id>', methods=["POST"])
+@app.route('/threads/edit/<thread_id>/<comment_id>', methods=["POST"])
 def process_edit_comment(thread_id, comment_id):    
+    threads = db.threads.find_one({'_id': ObjectId(thread_id)})
     comments = db.comments.find_one({
         '_id': ObjectId(comment_id)
     })
@@ -260,7 +262,8 @@ def process_edit_comment(thread_id, comment_id):
     })
     flash("Comment updated successfully!", "success")
     threads = db.threads.find_one({'_id': ObjectId(thread_id)})
-    return render_template('single_thread.html', threads=threads)
+    comments = db.comments.find({'thread_id': thread_id})
+    return render_template('single_thread.html', threads=threads, comments=comments)
 
 # "magic code" -- boilerplate
 if __name__ == '__main__':
