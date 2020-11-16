@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<h5>Display Search Results</h5>
-<p>Results for article title(s) with keyword "<b>{{",".join(searched_by)}}</b>" :
-
+<h5 class="mt-4 mb-4">Display Search Results</h5>
+<div class="mb-4">Results for article title(s) with keyword "<b>{{",".join(searched_by)}}</b>"
+</div>
 {% include 'thread_cards.html' %}
 
 {% endblock %}
