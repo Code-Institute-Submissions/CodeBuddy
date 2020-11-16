@@ -265,6 +265,41 @@ def process_edit_comment(thread_id, comment_id):
     comments = db.comments.find({'thread_id': thread_id})
     return render_template('single_thread.html', threads=threads, comments=comments)
 
+
+# show delete comment
+@app.route('/threads/delete/<thread_id>/<comment_id>')
+def show_delete_comment(thread_id, comment_id):
+    threads = db.threads.find_one({'_id': ObjectId(thread_id)})
+    comments = db.comments.find_one({'_id': ObjectId(comment_id),'thread_id' : thread_id})
+    return render_template('comments/delete_comment.html', threads=threads, comments=comments)
+
+
+# confirm delete comment
+@app.route('/threads/delete/<thread_id>/<comment_id>', methods=["POST"])
+def confirm_delete_comment(thread_id, comment_id):
+    threads = db.threads.find_one({'_id': ObjectId(thread_id)})
+    comments = db.comments.find_one({
+        '_id': ObjectId(comment_id)
+    })
+    commenter_email = request.form.get('commenter_email')
+    auth_email = commenter_email.lower()
+    auth_email = auth_email.strip()
+    # grab email from mongodb
+    original_email = comments["commenter_email"]
+    # if email from mongodb dont match email from user input
+    if original_email != auth_email:
+        flash("Your email does not match the original record for this comment. Delete was unsuccessful.", "error")
+        return render_template('comments/delete_comment.html', threads=threads, comments=comments)
+    
+    db.comments.remove({
+        '_id': ObjectId(comment_id)
+    })
+    flash("Comment deleted successfully!", "success")
+    threads = db.threads.find_one({'_id': ObjectId(thread_id)})
+    comments = db.comments.find({'thread_id': thread_id})
+    return render_template('single_thread.html', threads=threads, comments=comments)
+
+
 # "magic code" -- boilerplate
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
