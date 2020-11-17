@@ -141,7 +141,7 @@ def process_edit_thread(thread_id):
     # ensure edited fields have content
     elif len(thread_title) == 0 or len(thread_article) == 0:
         flash("Please ensure all field are filled!"
-              "Your changes were not saved.", "error")
+              " Your changes were not saved.", "error")
         return render_template('edit_thread.html', threads=threads)
 
     db.threads.update_one({
@@ -185,7 +185,7 @@ def confirm_delete(thread_id):
     # if email from mongodb dont match email from user input, prevent delete
     if original_email != auth_email:
         flash("Your email does not match the original record for this post."
-              "Delete was unsuccessful.", "error")
+              " Delete was unsuccessful.", "error")
         return render_template('confirm_delete_thread.html',
                                threads=thread_to_be_deleted)
 
@@ -262,13 +262,13 @@ def process_edit_comment(thread_id, comment_id):
     # if email from mongodb dont match email from user input
     if original_email != auth_email:
         flash("Your email does not match the original record for this comment."
-              "Edit was unsuccessful, changes were not saved.", "error")
+              " Edit was unsuccessful, changes were not saved.", "error")
         return render_template('comments/edit_comment.html', comments=comments)
 
     # ensure edited fields have content
     elif len(comment) == 0:
         flash("Please ensure all field are filled!"
-              "Your changes were not saved.", "error")
+              " Your changes were not saved.", "error")
         return render_template('comments/edit_comment.html', comments=comments)
 
     db.comments.update_one({
@@ -311,7 +311,7 @@ def confirm_delete_comment(thread_id, comment_id):
     # if email from mongodb dont match email from user input
     if original_email != auth_email:
         flash("Your email does not match the original record for this comment."
-              "Delete was unsuccessful.", "error")
+              " Delete was unsuccessful.", "error")
         return render_template('comments/delete_comment.html',
                                threads=threads, comments=comments)
 
