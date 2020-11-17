@@ -38,7 +38,7 @@ def show_threads():
 
 @app.route('/')
 def homepage_redirect():
-    return redirect(url_for('show_threads'))
+    return redirect(url_for('show_about'))
 
 
 @app.route('/search')
