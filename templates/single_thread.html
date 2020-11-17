@@ -8,24 +8,23 @@
     <div class="card-body pb-1">
         <h5 class="card-title pb-1">{{threads.thread_title}}</h5>
         <h6 class="card-subtitle mb-3 text-muted"><small>Posted by <b>{{threads.thread_author}}</b> on {{threads.thread_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
-            <div class="card-text mb-0 pb-0">{{threads.thread_article}}
-            </div>
+        <div class="card-text mb-0 pb-0">{{threads.thread_article}}
+        </div>
     </div>
     <div class="card-footer bg-white border-0 m-0 pt-0 pb-2">
         <div class="container">
             <div class="row">
                 <div class="col text-left">
-                <!-- <a class="badge badge-secondary" href="#" target="_blank">Comments</a> -->
                 </div>
-                <!-- edit and delete buttons -->
-            <div class="col text-right">
-                <a class="badge badge-secondary p-1 mb-2" href="{{ url_for('show_edit_thread', thread_id=threads._id ) }}">Edit Post</a>
-                <a class="badge badge-dark p-1 mb-2" href="{{ url_for('show_confirm_delete', thread_id=threads._id)}}">Delete Post</a>
+                <div class="col text-right">
+                    <a class="badge badge-secondary p-1 mb-2" href="{{ url_for('show_edit_thread', thread_id=threads._id ) }}">Edit Post</a>
+                    <a class="badge badge-dark p-1 mb-2" href="{{ url_for('show_confirm_delete', thread_id=threads._id)}}">Delete Post</a>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+
 <!-- comment form -->
 {% include 'comments/create_comment.html' %}
 

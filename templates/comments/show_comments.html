@@ -2,18 +2,18 @@
 
 {% for each_comment in comments %}
 
-    <div class="card">
-      <div class="card-body mt-1 pb-1">
+<div class="card">
+    <div class="card-body mt-1 pb-1">
         <h6 class="card-subtitle mb-2 text-muted"><small>by <b>{{each_comment.commenter_name}}</b> on {{each_comment.comment_datetime.strftime('%d %b %Y at %H:%M')}} UTC</small></h6>
         <div class="card-text mt-2"> {{each_comment.comment}}
         </div>
-      </div>
-      <div class="card-footer bg-white border-0 text-right pt-0 pb-2 mb-2">
-                <a class="badge badge-secondary p-1" href="{{url_for('show_edit_comment', comment_id=each_comment._id, thread_id=each_comment.thread_id)}}">Edit Comment</a>
-                <a class="badge badge-dark p-1" href="{{url_for('show_delete_comment', comment_id=each_comment._id, thread_id=each_comment.thread_id)}}">Delete Comment</a>
-      </div>
     </div>
-    <p>
+    <div class="card-footer bg-white border-0 text-right pt-0 pb-2 mb-2">
+        <a class="badge badge-secondary p-1" href="{{url_for('show_edit_comment', comment_id=each_comment._id, thread_id=each_comment.thread_id)}}">Edit Comment</a>
+        <a class="badge badge-dark p-1" href="{{url_for('show_delete_comment', comment_id=each_comment._id, thread_id=each_comment.thread_id)}}">Delete Comment</a>
+    </div>
+</div>
+<p>
     
 {% endfor %}
 
