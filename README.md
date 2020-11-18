@@ -155,15 +155,16 @@ Code for the project was committed to GitHub in the following manner:
 - Local branch commits were pushed to the remote repository master branch by executing the `git push -u origin master` command in a command-line interface.
 - Subsequent local branch commits were pushed to the remote repository master branch by executing the `git push` command in a command-line interface.
 
-Deployment to Heroku was performed in a debian based linux environment bash terminal in the following manner:
-- Install Heroku on local machine: `sudo snap install heroku --classic`
-- Log into Heroku: `heroku login -i`
-- Create a new heroku app: `heroku create <app-name>`
-- Verify that the correct remotes have been added: `git remote -v`
-- Setup a python virtual environment in the root folder of the project: `python3 -m venv venv`
-- Activate the python virtual environment whilst being in the root folder of the project: `source venv\bin\activate`
-- Install the dependencies: `pip install dnspython Flask Flask-Login gunicorn passlib pymongo python-dotenv`
-- Create requirements.txt file to store dependencies `pip freeze > requirements.txt`
+Deployment to Heroku was performed in the following manner:
+- Ensure requirements.txt file is installed, if not use `pip3 install -r requirements.txt`
+- Install Heroku on local machine with `sudo snap install heroku --classic`, skip this step if it is already installed
+- Log in into Heroku using `heroku login -i`
+- Create a new app on Herkou `heroku create <app-name>` , as app name needs to be unique throughout the web, it is suggested to put initials before the app name
+- Verify remotes that have been added with `git remote -v`
+- Install Gunicorn with `pip3 install gunicorn`
+- Create a `Procfile` (no extenstion) and add in to file the first line only `web gunicorn <your main app name without .py>:app`
+- Freeze imports and dependencies with `pip3 freeze --local > requirement.txt`
+- Finally commit changes and push to Heroku using `git add.` `git commit -m "<msg>"` then `git push heroku master`
 
 Using a file manager:
 - Create a file named `Procfile` without speech-marks or file extension and save `web gunicorn <main flask file name without .py>:app` on the first line of `Procfile` (in my case, the contents of the Procfile was `web gunicorn app:app`)
