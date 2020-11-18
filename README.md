@@ -31,7 +31,7 @@ Owners of the website may use this website for display ads revenue in the future
 - may then choose to browse articles, or create a new article as next step, followed by interacting with the rest of the content on the website
 
 ### Skeleton
-Wireframes for Code Buddy can be viewed [here](report/wireframes). Wireframes were built on figma. The wireframes were used as a guide. Ultimately, some slight design changes were implemented, such as splitting the about page and search functionality from the main threads page into their individual pages, to ensure a cleaner "GET" and "POST" route in the code. 
+Wireframes for Code Buddy can be viewed [here](report/wireframes). Wireframes were built on figma. The wireframes were used as a guide. Ultimately, some slight design changes were implemented, such as splitting the about page and search functionality from the main threads page into their individual pages, to ensure easier code maintenance.
 
 ### Surface
 Functionality and clarity was the main focus and reason behind the colour scheme and typography choice. Comfortable colors schemes were chosen and used to improve reading experience. If time and resource permits, the colour scheme and styling should be revisited and improved to offer something unique for the community. 
@@ -187,4 +187,4 @@ Back in the bash terminal:
 ## Credits
 - Code institues instructor Paul Chor for guidance on backend development
 - Teaching assistant John Benedict for helping with troubleshooting of bugs
-- Reddit / Quora / Stackoverflow as website inspiration
+- Reddit / Quora / Stackoverflow as project inspiration
