@@ -164,17 +164,12 @@ Deployment to Heroku was performed in the following manner:
 - Install Gunicorn with `pip3 install gunicorn`
 - Create a `Procfile` (no extenstion) and add in to file the first line only `web gunicorn <your main app name without .py>:app`
 - Freeze imports and dependencies with `pip3 freeze --local > requirement.txt`
-- Finally commit changes and push to Heroku using `git add.` `git commit -m "<msg>"` then `git push heroku master`
-
-Using a file manager:
-- Create a file named `Procfile` without speech-marks or file extension and save `web gunicorn <main flask file name without .py>:app` on the first line of `Procfile` (in my case, the contents of the Procfile was `web gunicorn app:app`)
-
-Using a web browser:
-- Log into [Heroku](https://id.heroku.com/login) and set environment variables for `SECRET_KEY = <your own key>`, `MONGO_URI = <your MongoDB URI>`
-
-Back in the bash terminal:
-- Commit all new changes to GitHub: `git add .` then `git commit -m “[message]"` then `git push`
-- Finally, push to Heroku: `git push heroku master`
+- Commit changes and push to Heroku using `git add.` `git commit -m "<msg>"` then `git push heroku master`
+- Proceed to the [Heroku](https://www.heroku.com/ "Heroku Cloud Application Platform") webpage and login to your dash board
+    - Choose the correct application made previously
+    - Under the Settings Tab --> Config Vars (Reveal Config Vars)
+    - Add in your Var keys like `MONGO_URL` and `SECRET_KEY` and their respective values
+    - Click `Open App` at the navbar above to see your webpage
 
 ## Run locally on PC
 - Clone the [repository](https://github.com/jyfoo213/CodeBuddy)
